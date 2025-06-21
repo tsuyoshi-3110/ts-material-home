@@ -16,7 +16,7 @@ export default function HomePage() {
       </h1>
       <p className="text-base sm:text-lg md:text-xl text-gray-400">
         建設現場の材料発注を、よりスムーズに。次世代の統合型アプリ「TS
-        Material」。
+        Material」
       </p>
     </main>
   );
