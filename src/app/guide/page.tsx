@@ -13,14 +13,6 @@ export default function GuidePage() {
         <p className="text-xl mb-6">
           材料の計算・発注・配送・管理までをワンストップで提供する建設業界向け統合システム
         </p>
-        {/* <a
-          href="/tsmaterial-guide.pdf"
-          download
-          className="inline-flex items-center gap-2 bg-white text-teal-600 font-semibold px-6 py-3 rounded shadow hover:bg-gray-100 transition"
-        >
-          <Download className="w-5 h-5" />
-          資料をダウンロード
-        </a> */}
       </section>
 
       {/* 主な機能 */}
