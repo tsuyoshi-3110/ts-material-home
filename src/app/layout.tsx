@@ -4,8 +4,20 @@ import "./globals.css";
 import Header from "@/components/ui/Header";
 
 export const metadata: Metadata = {
-  title: "TSMaterial 説明書",
-  description: "次世代の材料発注アプリ",
+  title: "TS Material | 建築材料の次世代オーダーシステム",
+  description: "TS Materialは、工事の仕様と平米数で必要材料を自動計算する次世代アプリです。",
+  keywords: ["TS Material", "建材アプリ", "材料自動計算", "建築業DX", "ts material"],
+  openGraph: {
+    title: "TS Material",
+    description: "工事の仕様と面積を入力するだけで材料を自動算出。今すぐ試してみよう。",
+    url: "https://ts-material-home.vercel.app",
+    siteName: "TS Material",
+    locale: "ja_JP",
+    type: "website",
+  },
+  other: {
+    "google-site-verification": "google5bcd7c905d1e54b2",
+  },
 };
 
 export default function RootLayout({
