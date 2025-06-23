@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://ts-material-home.vercel.app
+
+# Sitemaps
+Sitemap: https://ts-material-home.vercel.app/sitemap.xml
