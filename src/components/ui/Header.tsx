@@ -31,6 +31,7 @@ export default function Header({ className = "" }: HeaderProps) {
       <nav className="hidden space-x-4 md:flex">
         <Link href="/guide">説明</Link>
         <Link href="/privacy">プライバシー</Link>
+        <Link href="/login">管理者ログイン</Link>
       </nav>
 
       {/* モバイルメニュー */}
