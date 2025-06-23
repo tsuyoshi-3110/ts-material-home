@@ -8,10 +8,8 @@ import { FileText, Package, Truck } from "lucide-react";
 import {
   collection,
   doc,
-  getDoc,
   getDocs,
   onSnapshot,
-  query,
   setDoc,
 } from "firebase/firestore";
 
@@ -20,29 +18,29 @@ import {
   saveFeaturesToIndexedDB,
 } from "@/lib/indexeddb";
 
+const DEFAULT_FEATURES = [
+  {
+    id: "delivery",
+    title: "配送アプリ",
+    text: "QRコードや写真による納品確認が可能。",
+    icon: "truck",
+  },
+  {
+    id: "management",
+    title: "管理ウェブシステム",
+    text: "顧客管理、帳票出力、履歴管理が可能。",
+    icon: "file",
+  },
+
+  {
+    id: "material",
+    title: "材料計算アプリ",
+    text: "仕様と面積を入力するだけで材料と数量を自動算出。",
+    icon: "package",
+  },
+];
+
 export default function GuidePage() {
-  const DEFAULT_FEATURES = [
-    {
-      id: "delivery",
-      title: "配送アプリ",
-      text: "QRコードや写真による納品確認が可能。",
-      icon: "truck",
-    },
-    {
-      id: "management",
-      title: "管理ウェブシステム",
-      text: "顧客管理、帳票出力、履歴管理が可能。",
-      icon: "file",
-    },
-
-    {
-      id: "material",
-      title: "材料計算アプリ",
-      text: "仕様と面積を入力するだけで材料と数量を自動算出。",
-      icon: "package",
-    },
-  ];
-
   // IDに対応するアイコンマップを作成
   const iconMap: Record<string, JSX.Element> = {
     package: <Package size={48} className="text-teal-500 mx-auto" />,
