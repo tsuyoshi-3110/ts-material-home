@@ -1,15 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import logo from "@/assets/TSMatelixImage.png";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white text-center px-4">
       <Image
-        src={logo}
+        src="/images/default-icons/TSMatelixImage.png" // ✅ public/ 直下の images/
         alt="TSMatelix ロゴ"
-        className="mb-12 rounded-xl shadow-md w-40 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] h-auto"
+        width={320} // ✅ 必須
+        height={160} // ✅ 必須
+        priority // ✅ ローディング改善（初回表示なら推奨）
+        className="mb-12 rounded-xl shadow-md w-auto h-auto"
       />
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
         TS Matelix

@@ -2,31 +2,38 @@
 
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { saveFeaturesToIndexedDB } from "@/lib/indexeddb";
+import Image from "next/image";
 
 interface Feature {
   id: string;
   title: string;
   text: string;
-  icon: string; // ← "package" | "file" | "truck" のようにしてもOK
+  icon: string;
+  iconUrl?: string;
 }
 
 interface EditableFeatureProps {
   id: string;
-  icon: React.ReactNode; // ← ここは固定なので ReactNode のまま
+  iconUrl?: string;
   title: string;
   text: string;
-  editable?: boolean; // ログイン状態で true に
+  editable?: boolean;
   setFeatures: React.Dispatch<React.SetStateAction<Feature[]>>;
 }
 
 export default function EditableFeature({
   id,
-  icon,
+  iconUrl,
   title,
   text,
   editable = false,
@@ -36,36 +43,64 @@ export default function EditableFeature({
   const [currentTitle, setCurrentTitle] = useState(title);
   const [currentText, setCurrentText] = useState(text);
 
-  // 🔽 編集モードに入るたびに props を再反映
+  // 画像アップロード用 state
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>(
+    iconUrl || `/images/default-icons/${id}.png`
+  );
+  const [uploading, setUploading] = useState(false);
+
+  // props 変更を編集フォームに反映
   useEffect(() => {
     if (editing) {
       setCurrentTitle(title);
       setCurrentText(text);
+      setPreviewUrl(iconUrl || `/images/default-icons/${id}.png`);
     }
-  }, [editing, title, text]);
+  }, [editing, title, text, iconUrl, id]);
 
+  // ファイル選択ハンドラ
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file)); // 即時プレビュー
+    }
+  };
+
+  // 保存処理
   const handleSave = async () => {
+    setUploading(true);
     try {
+      let uploadedUrl = iconUrl ?? "";
+
+      // 画像が選択されていれば Storage へアップロード
+      if (selectedFile) {
+        const imgRef = storageRef(storage, `features/${id}.png`);
+        await uploadBytes(imgRef, selectedFile);
+        uploadedUrl = await getDownloadURL(imgRef);
+      }
+
+      // Firestore ドキュメント更新
       const ref = doc(db, "features", id);
       const snap = await getDoc(ref);
 
+      const payload = {
+        title: currentTitle,
+        text: currentText,
+        iconUrl: uploadedUrl,
+      };
+
       if (snap.exists()) {
-        await updateDoc(ref, {
-          title: currentTitle,
-          text: currentText,
-        });
+        await updateDoc(ref, payload);
       } else {
-        await setDoc(ref, {
-          title: currentTitle,
-          text: currentText,
-          icon: "", // 初期値など必要に応じて
-        });
+        await setDoc(ref, { icon: "", ...payload });
       }
 
-      // 🔽 親コンポーネントとIndexedDBの両方を更新
+      // 親 state & IndexedDB を更新
       setFeatures((prev) => {
         const updated = prev.map((f) =>
-          f.id === id ? { ...f, title: currentTitle, text: currentText } : f
+          f.id === id ? { ...f, ...payload } : f
         );
         saveFeaturesToIndexedDB(updated);
         return updated;
@@ -75,13 +110,37 @@ export default function EditableFeature({
     } catch (e) {
       alert("保存に失敗しました");
       console.error(e);
+    } finally {
+      setUploading(false);
     }
   };
+
+  /* ---------------- JSX ---------------- */
 
   if (editing && editable) {
     return (
       <div className="text-center p-4 bg-white rounded shadow space-y-2">
-        {icon}
+        {/* プレビュー */}
+        <Image
+          src={previewUrl}
+          alt={currentTitle}
+          width={64}
+          height={64}
+          className="mx-auto object-contain rounded"
+        />
+
+        {/* 画像選択 */}
+        <label className="block w-full cursor-pointer text-teal-600 underline">
+          画像を選択
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
+
+        {/* タイトル・テキスト */}
         <Input
           value={currentTitle}
           onChange={(e) => setCurrentTitle(e.target.value)}
@@ -92,8 +151,12 @@ export default function EditableFeature({
           onChange={(e) => setCurrentText(e.target.value)}
           className="text-gray-600"
         />
+
+        {/* ボタン */}
         <div className="flex gap-2 justify-center">
-          <Button onClick={handleSave}>保存</Button>
+          <Button onClick={handleSave} disabled={uploading}>
+            {uploading ? "アップロード中…" : "保存"}
+          </Button>
           <Button variant="outline" onClick={() => setEditing(false)}>
             キャンセル
           </Button>
@@ -102,6 +165,10 @@ export default function EditableFeature({
     );
   }
 
+  // 通常表示モード
+  const displayImageUrl =
+    iconUrl && iconUrl.length > 0 ? iconUrl : `/images/default-icons/${id}.png`;
+
   return (
     <div
       onDoubleClick={() => editable && setEditing(true)}
@@ -109,7 +176,13 @@ export default function EditableFeature({
         editable ? "pointer" : "default"
       } hover:shadow-md`}
     >
-      {icon}
+      <Image
+        src={displayImageUrl}
+        alt={title}
+        width={48}
+        height={48}
+        className="w-12 h-12 mx-auto object-contain"
+      />
       <h3 className="text-xl font-semibold mt-4 mb-2">{title}</h3>
       <p className="text-gray-600">{text}</p>
     </div>

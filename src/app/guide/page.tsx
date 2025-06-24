@@ -1,10 +1,9 @@
 "use client";
 
 import { onAuthStateChanged, User } from "firebase/auth";
-import { JSX, useEffect, useState } from "react";
-import { auth, db } from "@/lib/firebase";
+import { useEffect, useState } from "react";
+import { auth, db, storage } from "@/lib/firebase";
 import EditableFeature from "@/components/EditableFeature";
-import { FileText, Package, Truck } from "lucide-react";
 import {
   collection,
   doc,
@@ -12,6 +11,11 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 
 import {
   getAllFeaturesFromIndexedDB,
@@ -20,44 +24,48 @@ import {
 
 const DEFAULT_FEATURES = [
   {
-    id: "delivery",
+    id: "TSDeliLogo",
     title: "配送アプリ",
     text: "QRコードや写真による納品確認が可能。",
     icon: "truck",
+    iconUrl: "",
   },
   {
-    id: "management",
+    id: "TSAdmin",
     title: "管理ウェブシステム",
     text: "顧客管理、帳票出力、履歴管理が可能。",
     icon: "file",
+    iconUrl: "",
   },
-
   {
-    id: "Matelix",
+    id: "TSMatelixImage",
     title: "材料計算アプリ",
     text: "仕様と面積を入力するだけで材料と数量を自動算出。",
     icon: "package",
+    iconUrl: "",
   },
 ];
 
+interface Feature {
+  id: string;
+  title: string;
+  text: string;
+  icon: string;
+  iconUrl?: string;
+}
+
 export default function GuidePage() {
-  // IDに対応するアイコンマップを作成
-  const iconMap: Record<string, JSX.Element> = {
-    package: <Package size={48} className="text-teal-500 mx-auto" />,
-    file: <FileText size={48} className="text-teal-500 mx-auto" />,
-    truck: <Truck size={48} className="text-teal-500 mx-auto" />,
-  };
-
-  interface Feature {
-    id: string;
-    title: string;
-    text: string;
-    icon: string; // ← "package" | "file" | "truck" のようにしてもOK
-  }
-
   const [features, setFeatures] = useState<Feature[]>(DEFAULT_FEATURES);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // ← 追加
+  const [isLoading, setIsLoading] = useState(true);
+
+  const uploadImageAndGetUrl = async (id: string): Promise<string> => {
+    const response = await fetch(`/images/default-icons/${id}.png`);
+    const blob = await response.blob();
+    const imageRef = storageRef(storage, `features/${id}.png`);
+    await uploadBytes(imageRef, blob);
+    return await getDownloadURL(imageRef);
+  };
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -67,28 +75,30 @@ export default function GuidePage() {
   }, []);
 
   useEffect(() => {
-    let unsubscribe: (() => void) | null = null; // onSnapshot の解除用
+    let unsubscribe: (() => void) | null = null;
 
     const initAndSubscribe = async () => {
       try {
-        /* ---------- ① IndexedDB を即時読み込み（超高速表示） ---------- */
         const cached = await getAllFeaturesFromIndexedDB();
         if (cached && cached.length > 0) {
-          setFeatures(cached); // 画面に先に描画
+          setFeatures(cached);
         }
 
-        /* ---------- ② Firestore に初期データが無ければ投入 ---------- */
         const colRef = collection(db, "features");
         const firstSnap = await getDocs(colRef);
 
         if (firstSnap.empty) {
-          // コレクションごと空 ⇒ DEFAULT_FEATURES を一括追加
           await Promise.all(
-            DEFAULT_FEATURES.map((f) => setDoc(doc(db, "features", f.id), f))
+            DEFAULT_FEATURES.map(async (f) => {
+              const iconUrl = await uploadImageAndGetUrl(f.id);
+              await setDoc(doc(db, "features", f.id), {
+                ...f,
+                iconUrl,
+              });
+            })
           );
         }
 
-        /* ---------- ③ Firestore を onSnapshot でリアルタイム購読 ---------- */
         unsubscribe = onSnapshot(colRef, async (snap) => {
           const fetched: Feature[] = snap.docs
             .map((d) => {
@@ -98,13 +108,14 @@ export default function GuidePage() {
                 title: data.title,
                 text: data.text,
                 icon: data.icon || "package",
+                iconUrl: data.iconUrl || "",
               };
             })
-            .sort((a, b) => a.id.localeCompare(b.id)); // id順で安定表示
+            .sort((a, b) => a.id.localeCompare(b.id));
 
-          setFeatures(fetched); // 画面更新
-          await saveFeaturesToIndexedDB(fetched); // IndexedDB も同期
-          setIsLoading(false); // 初期ロード完了
+          setFeatures(fetched);
+          await saveFeaturesToIndexedDB(fetched);
+          setIsLoading(false);
         });
       } catch (err) {
         console.error("初期化／同期処理に失敗しました", err);
@@ -114,7 +125,6 @@ export default function GuidePage() {
 
     initAndSubscribe();
 
-    /* ---------- クリーンアップ：画面離脱時に購読解除 ---------- */
     return () => {
       if (unsubscribe) unsubscribe();
     };
@@ -143,7 +153,7 @@ export default function GuidePage() {
                 id={feature.id}
                 title={feature.title}
                 text={feature.text}
-                icon={iconMap[feature.icon] ?? iconMap["package"]}
+                iconUrl={feature.iconUrl}
                 editable={!!currentUser}
                 setFeatures={setFeatures}
               />
