@@ -6,7 +6,7 @@ export default function PrivacyPolicyPage() {
 
         <p className="mb-6">
           「TS
-          Material」は、ユーザーのプライバシーを尊重し、以下の方針に基づいて情報を管理します。
+          Matelix」は、ユーザーのプライバシーを尊重し、以下の方針に基づいて情報を管理します。
         </p>
 
         <h2 className="text-xl font-semibold mt-8 mb-2">1. 収集する情報</h2>
@@ -31,10 +31,10 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-xl font-semibold mt-8 mb-2">4. お問い合わせ先</h2>
         <p className="mb-4">
           <a
-            href="mailto:tsmaterialstore@gmail.com"
+            href="mailto:tsMatelixstore@gmail.com"
             className="text-teal-600 underline"
           >
-            tsmaterialstore@gmail.com
+            tsMatelixstore@gmail.com
           </a>
         </p>
 
@@ -48,13 +48,13 @@ export default function PrivacyPolicyPage() {
         </h2>
         <p>
           TS
-          Materialのアカウント削除をご希望の場合は、登録されたメールアドレスから「アカウント削除希望」と明記のうえ、
+          Matelixのアカウント削除をご希望の場合は、登録されたメールアドレスから「アカウント削除希望」と明記のうえ、
           <br />
           <a
-            href="mailto:tsmaterialstore@gmail.com"
+            href="mailto:tsMatelixstore@gmail.com"
             className="text-teal-600 underline"
           >
-            tsmaterialstore@gmail.com
+            tsMatelixstore@gmail.com
           </a>{" "}
           までご連絡ください。確認後、速やかに対応いたします。
         </p>

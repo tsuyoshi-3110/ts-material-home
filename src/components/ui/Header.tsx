@@ -24,7 +24,7 @@ export default function Header({ className = "" }: HeaderProps) {
     >
       {/* 左ロゴ */}
       <Link href="/" className="text-xl font-bold">
-        TSMaterial
+        TSMatelix
       </Link>
 
       {/* デスクトップ用ナビ */}

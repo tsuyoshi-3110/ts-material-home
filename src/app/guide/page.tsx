@@ -33,7 +33,7 @@ const DEFAULT_FEATURES = [
   },
 
   {
-    id: "material",
+    id: "Matelix",
     title: "材料計算アプリ",
     text: "仕様と面積を入力するだけで材料と数量を自動算出。",
     icon: "package",
@@ -124,7 +124,7 @@ export default function GuidePage() {
     <main className="bg-gray-50 text-gray-900">
       <section className="bg-gray-950 text-white py-24 text-center h-64">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-          TSMaterial アプリ
+          TSMatelix アプリ
         </h1>
         <p className="text-xl mb-6">
           材料の計算・発注・配送・管理までをワンストップで提供する建設業界向け統合システム

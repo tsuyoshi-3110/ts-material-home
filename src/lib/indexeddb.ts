@@ -1,6 +1,6 @@
 import { openDB } from "idb";
 
-const DB_NAME = "tsmaterial-db";
+const DB_NAME = "tsMatelix-db";
 const STORE_NAME = "features";
 
 export const getDB = async () => {

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://ts-material-home.vercel.app
+Host: https://ts-Matelix-home.vercel.app
 
 # Sitemaps
-Sitemap: https://ts-material-home.vercel.app/sitemap.xml
+Sitemap: https://ts-Matelix-home.vercel.app/sitemap.xml
