@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
             href="mailto:tsMatelixstore@gmail.com"
             className="text-teal-600 underline"
           >
-            tsMatelixstore@gmail.com
+            tsmatelix@gmail.com
           </a>
         </p>
 
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
             href="mailto:tsMatelixstore@gmail.com"
             className="text-teal-600 underline"
           >
-            tsMatelixstore@gmail.com
+            tsmatelix@gmail.com
           </a>{" "}
           までご連絡ください。確認後、速やかに対応いたします。
         </p>
