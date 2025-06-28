@@ -57,9 +57,43 @@ export default function AdminIntroPage() {
         </Link>
 
         {/* タイトル */}
-        <h1 className="text-3xl font-bold text-center mt-10 mb-10">
+        <h1 className="text-3xl font-bold text-center mt-15 mb-10">
           TSMatelix 管理ウェブ機能
         </h1>
+      </div>
+
+      <div className="mb-8 text-left">
+        <h2 className="text-xl font-semibold text-gray-800">
+          「管理業務の手間をゼロに」
+        </h2>
+        <p className="text-gray-600 mt-4 text-left leading-relaxed">
+          TSMatelix 管理ウェブは、
+          <strong>「外装改修工事向け建材販売業者」</strong>のために開発された
+          <strong>クラウド型販売管理システム</strong>です。
+        </p>
+
+        <p className="text-gray-600 mt-4 text-left leading-relaxed">
+          見積作成、受注管理、配送スケジュール調整、価格改定、顧客ごとの割引設定、
+          材料使用量の現場別集計、そして請求書や納品書の自動PDF発行まで。
+          今までエクセルや手作業で行っていた煩雑な作業が、 この一つの管理画面で
+          <strong>すべて一元化・自動化</strong>されます。
+        </p>
+
+        <p className="text-gray-600 mt-4 text-left leading-relaxed">
+          また、現場側の<strong>「材料計算販売アプリ」</strong>や
+          <strong>「配送アプリ」</strong>とも リアルタイムで完全連携。
+        </p>
+
+        <p className="text-gray-600 mt-4 text-left leading-relaxed">
+          価格変更、配送不可日の設定、受注状況の更新など、 あらゆる情報が
+          <strong>ワンクリックで全アプリに即時反映</strong>されます。
+        </p>
+
+        <p className="text-gray-600 mt-4 text-left leading-relaxed">
+          「手間ゼロ」「ミスゼロ」「スピード対応」。 TSMatelix
+          管理ウェブは、営業から配送までの
+          <strong>全フローを強力にサポート</strong>します。
+        </p>
       </div>
 
       <div className="space-y-12">
