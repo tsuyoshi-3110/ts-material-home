@@ -147,7 +147,7 @@ export default function GuidePage() {
           <p className="text-center text-gray-500">読み込み中...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
+            {features.map((feature, index) => (
               <EditableFeature
                 key={feature.id}
                 id={feature.id}
@@ -156,6 +156,7 @@ export default function GuidePage() {
                 iconUrl={feature.iconUrl}
                 editable={!!currentUser}
                 setFeatures={setFeatures}
+                index={index}
               />
             ))}
           </div>

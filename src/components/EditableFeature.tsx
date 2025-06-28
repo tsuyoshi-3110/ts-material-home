@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { saveFeaturesToIndexedDB } from "@/lib/indexeddb";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Feature {
   id: string;
@@ -29,6 +30,7 @@ interface EditableFeatureProps {
   text: string;
   editable?: boolean;
   setFeatures: React.Dispatch<React.SetStateAction<Feature[]>>;
+  index: number;
 }
 
 export default function EditableFeature({
@@ -38,6 +40,7 @@ export default function EditableFeature({
   text,
   editable = false,
   setFeatures,
+  index,
 }: EditableFeatureProps) {
   const [editing, setEditing] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
@@ -49,6 +52,8 @@ export default function EditableFeature({
     iconUrl || `/images/default-icons/${id}.png`
   );
   const [uploading, setUploading] = useState(false);
+
+  const router = useRouter();
 
   // props 変更を編集フォームに反映
   useEffect(() => {
@@ -115,6 +120,22 @@ export default function EditableFeature({
     }
   };
 
+  const handleClick = () => {
+    switch (index) {
+      case 0:
+        router.push("/guide/admin");
+        break;
+      case 1:
+        router.push("/guide/deli");
+        break;
+      case 2:
+        router.push("/guide/matelix");
+        break;
+      default:
+        console.warn("遷移先未定義 index:", index);
+    }
+  };
+
   /* ---------------- JSX ---------------- */
 
   if (editing && editable) {
@@ -171,17 +192,36 @@ export default function EditableFeature({
 
   return (
     <div
+      onClick={handleClick}
       onDoubleClick={() => editable && setEditing(true)}
-      className={`text-center p-4 bg-white rounded shadow transition cursor-${
-        editable ? "pointer" : "default"
-      } hover:shadow-md`}
+      className={`relative text-center p-4 bg-white rounded shadow transition cursor-pointer hover:shadow-md`}
     >
+      {/* ✅ 右上編集ボタン */}
+      {editable && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // ← クリックが親に伝播しないように防ぐ
+            setEditing(true);
+          }}
+          className="absolute top-2 right-2 bg-gray-200 hover:bg-gray-300 text-sm px-2 py-1 rounded shadow"
+        >
+          ✎ 編集
+        </button>
+      )}
+
+      {/* ✅ 通常コンテンツ */}
       <Image
         src={displayImageUrl}
         alt={title}
-        width={48}
-        height={48}
-        className="w-12 h-12 mx-auto object-contain"
+        className="
+        w-28 h-28
+        sm:w-36 sm:h-36
+        md:w-44 md:h-44
+        mx-auto object-contain
+      "
+        width={0}
+        height={0}
+        sizes="100vw"
       />
       <h3 className="text-xl font-semibold mt-4 mb-2">{title}</h3>
       <p className="text-gray-600">{text}</p>
