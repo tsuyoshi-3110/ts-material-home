@@ -33,7 +33,7 @@ export default function TSDeliPage() {
 
         {/* タイトル */}
         <h1 className="text-3xl font-bold text-center mt-15 mb-10">
-          TSDelivery アプリ機能
+          TS Matelix 配送アプリ機能
         </h1>
       </div>
 
