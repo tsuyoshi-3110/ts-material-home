@@ -72,7 +72,7 @@ export default function TSCalcAppPage() {
           「現場での材料発注、その手間とミスをゼロに」
         </h2>
         <p className="text-gray-600 mt-2 text-left">
-          TSMatelix 材料計算販売アプリは、
+          TSMatelix 材料計算発注アプリは、
           <strong>「工事のプロフェッショナル」</strong>
           が抱える
           <strong>“材料発注の面倒・ミス・時間ロス”</strong>
