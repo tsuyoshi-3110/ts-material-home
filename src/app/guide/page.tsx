@@ -143,7 +143,7 @@ export default function GuidePage() {
 
       <section className="max-w-6xl mx-auto py-20 px-4">
         <h2 className="text-3xl font-bold text-center mb-12">
-          TSMatelixが実現する「3つの革新
+          TSMatelixが実現する「3つの革新」
         </h2>
         {isLoading ? (
           <p className="text-center text-gray-500">読み込み中...</p>
