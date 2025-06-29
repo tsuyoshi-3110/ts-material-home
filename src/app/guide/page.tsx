@@ -181,6 +181,22 @@ export default function GuidePage() {
           </p>
         </div>
       </section>
+
+      <section className="bg-white py-16 px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6">
+            対応工事種別と今後の拡張予定
+          </h2>
+          <p className="text-gray-800 leading-relaxed">
+            現在、TS Matelixは<strong>防水工事全般</strong>
+            に完全対応しています。
+            <br />
+            今後は<strong>塗装工事</strong>や<strong>外装リフォーム全般</strong>
+            への対応拡張も計画中。
+            お客様の業種や工事内容に合わせ、さらに柔軟で強力な業務支援を目指します。
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
