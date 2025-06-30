@@ -42,8 +42,8 @@ export default function TSDeliPage() {
           「スマホ一つで配送管理が完結」
         </h2>
         <p className="text-gray-600 mt-2 text-left">
-          TSMatelix 配送アプリは、
-          <strong>「外装改修工事用建材の配送ドライバー」</strong>
+          TS Matelix 配送アプリは、
+          <strong>「TS Matelixの配送ドライバー」</strong>
           向けに開発された、<strong>現場密着型のクラウド配送管理アプリ</strong>
           です。
           <br />

@@ -99,7 +99,7 @@ export default function TSCalcAppPage() {
           そんな非効率を、TSMatelixはゼロにします。
           <br />
           <br />
-          現場で<strong>「仕様」「面積」「立上り」</strong>
+          現場で<strong>「仕様」「数量」</strong>
           などを入力するだけで、必要な材料と数量を
           <strong>瞬時に自動計算</strong>。
           <br />
