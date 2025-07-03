@@ -39,6 +39,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       {/* body はちょうど100dvh。スクロールは main に限定する */}
+      <meta
+        name="google-site-verification"
+        content="4vAV9NvmjW-eGSFRYqZ_AzeX92uuaJYGWja9NqlGctw"
+      />
       <body className="bg-white text-black font-sans antialiased">
         <Header className="fixed inset-x-0 top-0 z-50 h-16 [--h:4rem] shrink-0" />
         <main className="pt-[var(--h)] min-h-screen overflow-y-auto">
