@@ -1,17 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { db, storage } from "@/lib/firebase";
-import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { saveFeaturesToIndexedDB } from "@/lib/indexeddb";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -25,12 +16,12 @@ interface Feature {
 
 interface EditableFeatureProps {
   id: string;
-  iconUrl?: string;
   title: string;
   text: string;
+  iconUrl?: string;
   editable?: boolean;
-  setFeatures: React.Dispatch<React.SetStateAction<Feature[]>>;
-  index: number;
+  index?: number;
+  setFeatures?: React.Dispatch<React.SetStateAction<Feature[]>>;
 }
 
 export default function EditableFeature({
@@ -39,20 +30,15 @@ export default function EditableFeature({
   title,
   text,
   editable = false,
-  setFeatures,
   index,
 }: EditableFeatureProps) {
   const [editing, setEditing] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
   const [currentText, setCurrentText] = useState(text);
 
-  // 画像アップロード用 state
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(
     iconUrl || `/images/default-icons/${id}.png`
   );
-  const [uploading, setUploading] = useState(false);
-
   const router = useRouter();
 
   // props 変更を編集フォームに反映
@@ -64,61 +50,7 @@ export default function EditableFeature({
     }
   }, [editing, title, text, iconUrl, id]);
 
-  // ファイル選択ハンドラ
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file)); // 即時プレビュー
-    }
-  };
 
-  // 保存処理
-  const handleSave = async () => {
-    setUploading(true);
-    try {
-      let uploadedUrl = iconUrl ?? "";
-
-      // 画像が選択されていれば Storage へアップロード
-      if (selectedFile) {
-        const imgRef = storageRef(storage, `features/${id}.png`);
-        await uploadBytes(imgRef, selectedFile);
-        uploadedUrl = await getDownloadURL(imgRef);
-      }
-
-      // Firestore ドキュメント更新
-      const ref = doc(db, "features", id);
-      const snap = await getDoc(ref);
-
-      const payload = {
-        title: currentTitle,
-        text: currentText,
-        iconUrl: uploadedUrl,
-      };
-
-      if (snap.exists()) {
-        await updateDoc(ref, payload);
-      } else {
-        await setDoc(ref, { icon: "", ...payload });
-      }
-
-      // 親 state & IndexedDB を更新
-      setFeatures((prev) => {
-        const updated = prev.map((f) =>
-          f.id === id ? { ...f, ...payload } : f
-        );
-        saveFeaturesToIndexedDB(updated);
-        return updated;
-      });
-
-      setEditing(false);
-    } catch (e) {
-      alert("保存に失敗しました");
-      console.error(e);
-    } finally {
-      setUploading(false);
-    }
-  };
 
   const handleClick = () => {
     switch (index) {
@@ -156,7 +88,7 @@ export default function EditableFeature({
           <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
+            // onChange={handleFileChange}
             className="hidden"
           />
         </label>
@@ -172,16 +104,6 @@ export default function EditableFeature({
           onChange={(e) => setCurrentText(e.target.value)}
           className="text-gray-600"
         />
-
-        {/* ボタン */}
-        <div className="flex gap-2 justify-center">
-          <Button onClick={handleSave} disabled={uploading}>
-            {uploading ? "アップロード中…" : "保存"}
-          </Button>
-          <Button variant="outline" onClick={() => setEditing(false)}>
-            キャンセル
-          </Button>
-        </div>
       </div>
     );
   }

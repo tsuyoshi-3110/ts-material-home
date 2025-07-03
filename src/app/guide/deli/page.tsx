@@ -1,12 +1,33 @@
-// app/admin-intro/page.tsx
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TS Matelix 配送アプリ機能｜クラウド配送管理",
+  description:
+    "TS Matelixの配送アプリは、現場と管理をリアルタイムで連携させるクラウド型配送管理ツール。ログイン連携・GPS・置き配記録・QR受領など、スマホ一つで業務を効率化。",
+  openGraph: {
+    title: "TS Matelix 配送アプリ機能｜クラウド配送管理",
+    description:
+      "ログイン連携、GPS、写真記録、QR受領…すべてスマホで完結。TS Matelix配送アプリの機能をご紹介。",
+    url: "https://tsmatelix.shop/admin-intro",
+    siteName: "TS Matelix",
+    images: [
+      {
+        url: "/images/tsDeliHome.jpeg", // 任意のOGP画像
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+};
 
 const features = [
   {
-    title: " 配送アプリ ログイン連携機能",
+    title: "配送アプリ ログイン連携機能",
     description:
       "配送アプリにログインするだけで、管理ウェブ・材料計算アプリとも自動でデータ連携。ドライバーの位置情報もリアルタイムに反映され、現場側も管理側も「今どこにいるか」「配送状況はどうか」 を即座に把握可能。面倒な設定不要、ワンタップで業務全体がつながります。",
     image: "/images/tsDeliLogin.jpeg",
@@ -22,20 +43,17 @@ const features = [
 export default function TSDeliPage() {
   return (
     <main className="max-w-5xl mx-auto py-10 px-4 mt-7">
-      <div>
-        {/* 戻るボタン（左上固定・絶対配置） */}
-        <Link
-          href="/guide"
-          className="absolute top-20 left-4 bg-black text-white hover:text-gray-500 p-2 rounded-full hover:bg-gray-950 transition flex items-center justify-center shadow-md"
-        >
-          <ArrowLeft size={20} />
-        </Link>
+      {/* 戻るボタン */}
+      <Link
+        href="/guide"
+        className="absolute top-20 left-4 bg-black text-white hover:text-gray-500 p-2 rounded-full hover:bg-gray-950 transition flex items-center justify-center shadow-md"
+      >
+        <ArrowLeft size={20} />
+      </Link>
 
-        {/* タイトル */}
-        <h1 className="text-3xl font-bold text-center mt-15 mb-10">
-          TS Matelix 配送アプリ機能
-        </h1>
-      </div>
+      <h1 className="text-3xl font-bold text-center mt-15 mb-10">
+        TS Matelix 配送アプリ機能
+      </h1>
 
       <div className="mb-8 text-left">
         <h2 className="text-xl font-semibold text-gray-800">
@@ -76,7 +94,6 @@ export default function TSDeliPage() {
             key={index}
             className="flex flex-col md:flex-row items-start md:items-center gap-6"
           >
-            {/* 画像部分 */}
             <div className="w-full md:w-1/2 flex justify-center">
               <Image
                 src={feature.image}
@@ -86,8 +103,6 @@ export default function TSDeliPage() {
                 className="rounded shadow"
               />
             </div>
-
-            {/* テキスト部分 */}
             <div className="w-full md:w-1/2">
               <h2 className="text-2xl font-semibold mb-2">{feature.title}</h2>
               <p className="text-gray-700">{feature.description}</p>

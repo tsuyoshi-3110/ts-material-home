@@ -1,135 +1,55 @@
-"use client";
+// app/guide/page.tsx (Server Component)
 
-import { onAuthStateChanged, User } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth, db, storage } from "@/lib/firebase";
 import EditableFeature from "@/components/EditableFeature";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  setDoc,
-} from "firebase/firestore";
-import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-
-import {
-  getAllFeaturesFromIndexedDB,
-  saveFeaturesToIndexedDB,
-} from "@/lib/indexeddb";
 
 const DEFAULT_FEATURES = [
-  {
-    id: "TSDeliLogo",
-    title: "配送アプリ",
-    text: "QRコードや写真による納品確認が可能。",
-    icon: "truck",
-    iconUrl: "",
-  },
+
   {
     id: "TSAdmin",
     title: "管理ウェブシステム",
     text: "顧客管理、帳票出力、履歴管理が可能。",
     icon: "file",
-    iconUrl: "",
+    iconUrl: "/images/default-icons/TSAdmin.png",
+  },
+   {
+    id: "TSDeliLogo",
+    title: "配送アプリ",
+    text: "QRコードや写真による納品確認が可能。",
+    icon: "truck",
+    iconUrl: "/images/default-icons/TSDeliLogo.png",
   },
   {
     id: "TSMatelixImage",
     title: "材料計算アプリ",
     text: "仕様と面積を入力するだけで材料と数量を自動算出。",
     icon: "package",
-    iconUrl: "",
+    iconUrl: "/images/default-icons/TSMatelixImage.png",
   },
 ];
 
-interface Feature {
-  id: string;
-  title: string;
-  text: string;
-  icon: string;
-  iconUrl?: string;
-}
+export const metadata = {
+  title: "TS Matelix アプリ｜建設業界向け統合型管理システム",
+  description:
+    "材料計算・発注・配送・管理を一括で行える建設業DXの最前線。TS Matelixが提供する3つの革新をご紹介します。",
+  openGraph: {
+    title: "TS Matelix アプリ",
+    description:
+      "材料計算・配送・管理をワンストップで提供。建設業の業務効率を革新する次世代統合型アプリ。",
+    url: "https://tsmatelix.shop/guide",
+    siteName: "TS Matelix",
+    images: [
+      {
+        url: "/ogp-guide.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+};
 
 export default function GuidePage() {
-  const [features, setFeatures] = useState<Feature[]>(DEFAULT_FEATURES);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const uploadImageAndGetUrl = async (id: string): Promise<string> => {
-    const response = await fetch(`/images/default-icons/${id}.png`);
-    const blob = await response.blob();
-    const imageRef = storageRef(storage, `features/${id}.png`);
-    await uploadBytes(imageRef, blob);
-    return await getDownloadURL(imageRef);
-  };
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsub();
-  }, []);
-
-  useEffect(() => {
-    let unsubscribe: (() => void) | null = null;
-
-    const initAndSubscribe = async () => {
-      try {
-        const cached = await getAllFeaturesFromIndexedDB();
-        if (cached && cached.length > 0) {
-          setFeatures(cached);
-        }
-
-        const colRef = collection(db, "features");
-        const firstSnap = await getDocs(colRef);
-
-        if (firstSnap.empty) {
-          await Promise.all(
-            DEFAULT_FEATURES.map(async (f) => {
-              const iconUrl = await uploadImageAndGetUrl(f.id);
-              await setDoc(doc(db, "features", f.id), {
-                ...f,
-                iconUrl,
-              });
-            })
-          );
-        }
-
-        unsubscribe = onSnapshot(colRef, async (snap) => {
-          const fetched: Feature[] = snap.docs
-            .map((d) => {
-              const data = d.data();
-              return {
-                id: d.id,
-                title: data.title,
-                text: data.text,
-                icon: data.icon || "package",
-                iconUrl: data.iconUrl || "",
-              };
-            })
-            .sort((a, b) => a.id.localeCompare(b.id));
-
-          setFeatures(fetched);
-          await saveFeaturesToIndexedDB(fetched);
-          setIsLoading(false);
-        });
-      } catch (err) {
-        console.error("初期化／同期処理に失敗しました", err);
-        setIsLoading(false);
-      }
-    };
-
-    initAndSubscribe();
-
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
-  }, []);
-
   return (
     <main className="bg-gray-50 text-gray-900">
       <section className="bg-gray-950 text-white py-24 text-center h-64">
@@ -145,24 +65,19 @@ export default function GuidePage() {
         <h2 className="text-3xl font-bold text-center mb-12">
           TSMatelixが実現する「3つの革新」
         </h2>
-        {isLoading ? (
-          <p className="text-center text-gray-500">読み込み中...</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <EditableFeature
-                key={feature.id}
-                id={feature.id}
-                title={feature.title}
-                text={feature.text}
-                iconUrl={feature.iconUrl}
-                editable={!!currentUser}
-                setFeatures={setFeatures}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {DEFAULT_FEATURES.map((feature, index) => (
+            <EditableFeature
+              key={feature.id}
+              id={feature.id}
+              title={feature.title}
+              text={feature.text}
+              iconUrl={feature.iconUrl}
+              editable={false} // Server Component では編集不可
+              index={index}
+            />
+          ))}
+        </div>
       </section>
 
       <section className="bg-white py-16 px-4">

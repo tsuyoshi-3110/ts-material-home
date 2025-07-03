@@ -3,6 +3,31 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TSMatelix 材料発注アプリ | 建設現場のミスゼロ化を実現",
+  description:
+    "建設現場の材料発注に革命。TSMatelixは仕様・面積から必要な材料を即時算出し、見積もり・発注・再注文までスマホで完結。",
+  openGraph: {
+    title: "TSMatelix 材料発注アプリ",
+    description:
+      "スマホで材料を正確に発注。面積入力だけで建材・数量を即算出。見積・履歴連動・数量調整・セット発注まで対応。",
+    url: "https://ts-matelix-home.vercel.app/admin-intro",
+    siteName: "TS Matelix",
+    locale: "ja_JP",
+    type: "article",
+  },
+  keywords: [
+    "TSMatelix",
+    "建材注文アプリ",
+    "建設材料計算",
+    "スマホ発注",
+    "資材管理",
+    "施工効率化",
+    "現場DX",
+  ],
+};
 
 const features = [
   {
@@ -82,57 +107,57 @@ export default function TSCalcAppPage() {
           <br />
           これまで、現場での発注は「手計算」「エクセル」「FAX」「電話」が当たり前でした。
           その結果…
-          <ul className="list-disc pl-6 mt-2">
-            <li>
-              「どこまで拾った？」と何度も確認…
-              <strong>拾い忘れ・数量間違い</strong>が絶えない
-            </li>
-            <li>
-              「あれ、数量違った…」
-              <strong>計算ミスによる二度手間・誤発注</strong>
-            </li>
-            <li>
-              <strong>FAX・電話・手書き注文書</strong>で発注にかかる
-              <strong>かかる非効率</strong>
-            </li>
-          </ul>
-          そんな非効率を、TSMatelixはゼロにします。
-          <br />
-          <br />
-          現場で<strong>「仕様」「数量」</strong>
-          などを入力するだけで、必要な材料と数量を
-          <strong>瞬時に自動計算</strong>。
-          <br />
-          <br />
-          <strong>そのままワンタップで見積作成・PDF出力・即注文</strong>
-          まで完了。 単品、セット、一式、どの発注パターンでも対応可能です。
-          <br />
-          <br />
-          「もっと少なく」「一式の倍率を変えたい」そんな現場特有の調整も、
-          <strong>「数量調整画面」で一発修正</strong>。
-          <br />
-          <br />
-          過去の<strong>注文履歴から再発注</strong>も、
-          <strong>現場別・月別の購入履歴確認</strong>も、
-          <strong>全てアプリから数秒で操作可能</strong>です。
-          <br />
-          <br />
-          さらに、現場で意外と面倒な
-          <strong>「面積拾い出し用 図形計算機能」</strong>、
-          <strong>「ドレン雨量計算ツール」</strong>なども標準搭載。
-          <br />
-          <strong>もう現場で電卓も、分厚い施工資料も不要</strong>です。
-          <br />
-          <br />
-          もちろん、材料屋側の
-          <strong>管理ウェブとも完全リアルタイム連携</strong>。
-          <strong>価格改定・配送不可日・受注状況</strong>は即時同期。
-          <br />
-          <br />
-          今までの「電話」「紙」「FAX」によるミスやタイムロスをなくし、
-          <strong>最短・正確・スマートな材料手配</strong>を、
-          このアプリ一つで実現します。
         </p>
+        <ul className="list-disc pl-6 mt-2">
+          <li>
+            「どこまで拾った？」と何度も確認…
+            <strong>拾い忘れ・数量間違い</strong>が絶えない
+          </li>
+          <li>
+            「あれ、数量違った…」
+            <strong>計算ミスによる二度手間・誤発注</strong>
+          </li>
+          <li>
+            <strong>FAX・電話・手書き注文書</strong>で発注にかかる
+            <strong>かかる非効率</strong>
+          </li>
+        </ul>
+        そんな非効率を、TSMatelixはゼロにします。
+        <br />
+        <br />
+        現場で<strong>「仕様」「数量」</strong>
+        などを入力するだけで、必要な材料と数量を
+        <strong>瞬時に自動計算</strong>。
+        <br />
+        <br />
+        <strong>そのままワンタップで見積作成・PDF出力・即注文</strong>
+        まで完了。 単品、セット、一式、どの発注パターンでも対応可能です。
+        <br />
+        <br />
+        「もっと少なく」「一式の倍率を変えたい」そんな現場特有の調整も、
+        <strong>「数量調整画面」で一発修正</strong>。
+        <br />
+        <br />
+        過去の<strong>注文履歴から再発注</strong>も、
+        <strong>現場別・月別の購入履歴確認</strong>も、
+        <strong>全てアプリから数秒で操作可能</strong>です。
+        <br />
+        <br />
+        さらに、現場で意外と面倒な
+        <strong>「面積拾い出し用 図形計算機能」</strong>、
+        <strong>「ドレン雨量計算ツール」</strong>なども標準搭載。
+        <br />
+        <strong>もう現場で電卓も、分厚い施工資料も不要</strong>です。
+        <br />
+        <br />
+        もちろん、材料屋側の
+        <strong>管理ウェブとも完全リアルタイム連携</strong>。
+        <strong>価格改定・配送不可日・受注状況</strong>は即時同期。
+        <br />
+        <br />
+        今までの「電話」「紙」「FAX」によるミスやタイムロスをなくし、
+        <strong>最短・正確・スマートな材料手配</strong>を、
+        このアプリ一つで実現します。
       </div>
 
       <div className="space-y-12">

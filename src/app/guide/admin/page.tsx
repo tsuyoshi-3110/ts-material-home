@@ -1,8 +1,35 @@
 // app/admin-intro/page.tsx
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TSMatelix 管理ウェブ機能｜外装改修工事向けクラウド管理システム",
+  description:
+    "見積作成から配送管理、請求書自動発行まで一括管理。TSMatelix 管理ウェブは、外装改修工事業者向けに開発されたクラウド型販売管理システム。",
+  openGraph: {
+    title: "TSMatelix 管理ウェブ機能｜外装改修工事向けクラウド管理システム",
+    description:
+      "顧客管理・価格改定・配送スケジュール調整など全フローを自動化・一元化。",
+    url: "https://your-domain.com/guide/admin",
+    images: [
+      {
+        url: "/images/estimatePDF.png",
+        width: 1200,
+        height: 630,
+        alt: "TSMatelix 管理ウェブ機能",
+      },
+    ],
+  },
+  keywords: [
+    "建材管理システム",
+    "外装改修工事",
+    "販売管理",
+    "材料発注",
+    "クラウド業務管理",
+  ],
+};
 
 const features = [
   {
@@ -17,7 +44,6 @@ const features = [
       "各現場で使用された材料を品目別に自動で集計。原価管理・予算管理がスムーズに進められます。",
     image: "/images/salesByMonth.png",
   },
-
   {
     title: "見積もりも簡単",
     description:
@@ -48,7 +74,6 @@ export default function AdminIntroPage() {
   return (
     <main className="max-w-5xl mx-auto py-10 px-4 mt-7">
       <div>
-        {/* 戻るボタン（左上固定・絶対配置） */}
         <Link
           href="/guide"
           className="absolute top-20 left-4 bg-black text-white hover:text-gray-500 p-2 rounded-full hover:bg-gray-950 transition flex items-center justify-center shadow-md"
@@ -56,7 +81,6 @@ export default function AdminIntroPage() {
           <ArrowLeft size={20} />
         </Link>
 
-        {/* タイトル */}
         <h1 className="text-3xl font-bold text-center mt-15 mb-10">
           TSMatelix 管理ウェブ機能
         </h1>
@@ -71,24 +95,20 @@ export default function AdminIntroPage() {
           <strong>「外装改修工事向け建材販売業者」</strong>のために開発された
           <strong>クラウド型販売管理システム</strong>です。
         </p>
-
         <p className="text-gray-600 mt-4 text-left leading-relaxed">
           見積作成、受注管理、配送スケジュール調整、価格改定、顧客ごとの割引設定、
           材料使用量の現場別集計、そして請求書や納品書の自動PDF発行まで。
           今までエクセルや手作業で行っていた煩雑な作業が、 この一つの管理画面で
           <strong>すべて一元化・自動化</strong>されます。
         </p>
-
         <p className="text-gray-600 mt-4 text-left leading-relaxed">
           また、現場側の<strong>「材料計算販売アプリ」</strong>や
           <strong>「配送アプリ」</strong>とも リアルタイムで完全連携。
         </p>
-
         <p className="text-gray-600 mt-4 text-left leading-relaxed">
           価格変更、配送不可日の設定、受注状況の更新など、 あらゆる情報が
           <strong>ワンクリックで全アプリに即時反映</strong>されます。
         </p>
-
         <p className="text-gray-600 mt-4 text-left leading-relaxed">
           「手間ゼロ」「ミスゼロ」「スピード対応」。 TSMatelix
           管理ウェブは、営業から配送までの
