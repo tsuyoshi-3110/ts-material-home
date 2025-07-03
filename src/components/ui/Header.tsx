@@ -46,7 +46,7 @@ export default function Header({ className = "" }: HeaderProps) {
               className="block rounded px-2 py-1 hover:bg-gray-100"
               onClick={() => setOpen(false)}
             >
-              説明
+              案内
             </Link>
             <Link
               href="/privacy"
@@ -54,13 +54,6 @@ export default function Header({ className = "" }: HeaderProps) {
               onClick={() => setOpen(false)}
             >
               プライバシー
-            </Link>
-            <Link
-              href="/login"
-              className="block rounded px-2 py-1 hover:bg-gray-100"
-              onClick={() => setOpen(false)}
-            >
-              管理者ログイン
             </Link>
           </div>
         )}
