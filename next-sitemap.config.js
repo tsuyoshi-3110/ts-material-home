@@ -1,7 +1,19 @@
+// next-sitemap.config.js
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://ts-matelix-home.vercel.app",
-  generateRobotsTxt: true, // ← robots.txt も自動生成
+  // ここを本番で使いたいドメインに変更
+  siteUrl: "https://tsmatelix.shop",
+
+  // robots.txt も要るなら true
+  generateRobotsTxt: true,
+
+  // 大規模サイトで分割したい場合
   sitemapSize: 5000,
-  generateIndexSitemap: false, // ← sitemap-0.xml を生成しない
+
+  // 出力先は public フォルダ
+  outDir: "public",
+
+  // 任意で
+  changefreq: "daily",
+  priority: 0.7,
 };
