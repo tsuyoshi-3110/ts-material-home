@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white text-center px-4">
+    <main className="min-h-screen flex flex-col items-center justify-start pt-24 bg-gray-950 text-white text-center px-4">
       <Image
         src="/images/default-icons/TSMatelixImage.png"
         alt="TS Matelix ロゴ"
