@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
+import Head from "next/head";
+import { tsmatelixStructuredData } from "@/lib/structuredData";
+import QRSection from "@/components/QRSection";
 
 export const metadata: Metadata = {
   title: "TSMatelix 材料発注アプリ | 建設現場のミスゼロ化を実現",
@@ -13,7 +16,7 @@ export const metadata: Metadata = {
     title: "TSMatelix 材料発注アプリ",
     description:
       "スマホで材料を正確に発注。面積入力だけで建材・数量を即算出。見積・履歴連動・数量調整・セット発注まで対応。",
-    url: "https://ts-matelix-home.vercel.app/admin-intro",
+    url: "https://www.tsmatelix.shop/admin-intro",
     siteName: "TS Matelix",
     locale: "ja_JP",
     type: "article",
@@ -79,115 +82,136 @@ const features = [
 
 export default function TSCalcAppPage() {
   return (
-    <main className="max-w-5xl mx-auto py-10 px-4 mt-7">
-      <div>
-        {/* 戻るボタン（左上固定・絶対配置） */}
-        <Link
-          href="/guide"
-          className="absolute top-20 left-4 bg-black text-white hover:text-gray-500 p-2 rounded-full hover:bg-gray-950 transition flex items-center justify-center shadow-md"
-        >
-          <ArrowLeft size={20} />
-        </Link>
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(tsmatelixStructuredData),
+          }}
+        />
+      </Head>
 
-        {/* タイトル */}
-        <h1 className="text-3xl font-bold text-center mt-15 mb-10">
-          TSMatelix 材料注文発注アプリ機能
-        </h1>
-      </div>
-
-      <div className="mb-8 text-left">
-        <h2 className="text-xl font-semibold text-gray-800">
-          「現場での材料発注、その手間とミスをゼロに」
-        </h2>
-        <p className="text-gray-600 mt-2 text-left">
-          TSMatelix 材料計算発注アプリは、
-          <strong>「工事のプロフェッショナル」</strong>
-          が抱える
-          <strong>“材料発注の面倒・ミス・時間ロス”</strong>
-          を完全解決するために開発された、
-          <strong>スマホ一台で完結するクラウド型資材手配ツール</strong>です。
-          <br />
-          <br />
-          これまで、現場での発注は「手計算」「エクセル」「FAX」「電話」が当たり前でした。
-          その結果…
-        </p>
-        <ul className="list-disc pl-6 mt-2">
-          <li>
-            「どこまで拾った？」と何度も確認…
-            <strong>拾い忘れ・数量間違い</strong>が絶えない
-          </li>
-          <li>
-            「あれ、数量違った…」
-            <strong>計算ミスによる二度手間・誤発注</strong>
-          </li>
-          <li>
-            <strong>FAX・電話・手書き注文書</strong>で発注にかかる
-            <strong>かかる非効率</strong>
-          </li>
-        </ul>
-        そんな非効率を、TSMatelixはゼロにします。
-        <br />
-        <br />
-        現場で<strong>「仕様」「数量」</strong>
-        などを入力するだけで、必要な材料と数量を
-        <strong>瞬時に自動計算</strong>。
-        <br />
-        <br />
-        <strong>そのままワンタップで見積作成・PDF出力・即注文</strong>
-        まで完了。 単品、セット、一式、どの発注パターンでも対応可能です。
-        <br />
-        <br />
-        「もっと少なく」「一式の倍率を変えたい」そんな現場特有の調整も、
-        <strong>「数量調整画面」で一発修正</strong>。
-        <br />
-        <br />
-        過去の<strong>注文履歴から再発注</strong>も、
-        <strong>現場別・月別の購入履歴確認</strong>も、
-        <strong>全てアプリから数秒で操作可能</strong>です。
-        <br />
-        <br />
-        さらに、現場で意外と面倒な
-        <strong>「面積拾い出し用 図形計算機能」</strong>、
-        <strong>「ドレン雨量計算ツール」</strong>なども標準搭載。
-        <br />
-        <strong>もう現場で電卓も、分厚い施工資料も不要</strong>です。
-        <br />
-        <br />
-        もちろん、材料屋側の
-        <strong>管理ウェブとも完全リアルタイム連携</strong>。
-        <strong>価格改定・配送不可日・受注状況</strong>は即時同期。
-        <br />
-        <br />
-        今までの「電話」「紙」「FAX」によるミスやタイムロスをなくし、
-        <strong>最短・正確・スマートな材料手配</strong>を、
-        このアプリ一つで実現します。
-      </div>
-
-      <div className="space-y-12">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="flex flex-col md:flex-row items-start md:items-center gap-6"
+      <main className="max-w-5xl mx-auto py-10 px-4 mt-7">
+        <div>
+          {/* 戻るボタン（左上固定・絶対配置） */}
+          <Link
+            href="/guide"
+            className="absolute top-20 left-4 bg-black text-white hover:text-gray-500 p-2 rounded-full hover:bg-gray-950 transition flex items-center justify-center shadow-md"
           >
-            {/* 画像部分 */}
-            <div className="w-full md:w-1/2 flex justify-center">
-              <Image
-                src={feature.image}
-                alt={feature.title}
-                width={200}
-                height={100}
-                className="rounded shadow"
-              />
-            </div>
+            <ArrowLeft size={20} />
+          </Link>
 
-            {/* テキスト部分 */}
-            <div className="w-full md:w-1/2">
-              <h2 className="text-2xl font-semibold mb-2">{feature.title}</h2>
-              <p className="text-gray-700">{feature.description}</p>
+          {/* タイトル */}
+          <h1 className="text-3xl font-bold text-center mt-15 mb-10">
+            建設業のための材料注文・発注アプリ「TSMatelix」
+            <br/>
+            仕様と面積で即計算・即注文
+          </h1>
+        </div>
+
+        <div className="mb-8 text-left">
+          <h2 className="text-xl font-semibold text-gray-800">
+            「現場での材料発注、その手間とミスをゼロに」
+          </h2>
+          <p className="text-gray-600 mt-2 text-left">
+            TSMatelix 材料計算発注アプリは、
+            <strong>「工事のプロフェッショナル」</strong>
+            が抱える
+            <strong>“材料発注の面倒・ミス・時間ロス”</strong>
+            を完全解決するために開発された、
+            <strong>スマホ一台で完結するクラウド型資材手配ツール</strong>です。
+            <br />
+            <br />
+            これまで、現場での発注は「手計算」「エクセル」「FAX」「電話」が当たり前でした。
+            その結果…
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>
+              「どこまで拾った？」と何度も確認…
+              <strong>拾い忘れ・数量間違い</strong>が絶えない
+            </li>
+            <li>
+              「あれ、数量違った…」
+              <strong>計算ミスによる二度手間・誤発注</strong>
+            </li>
+            <li>
+              <strong>FAX・電話・手書き注文書</strong>で発注にかかる
+              <strong>かかる非効率</strong>
+            </li>
+          </ul>
+          そんな非効率を、TSMatelixはゼロにします。
+          <br />
+          <br />
+          現場で<strong>「仕様」「数量」</strong>
+          などを入力するだけで、必要な材料と数量を
+          <strong>瞬時に自動計算</strong>。
+          <br />
+          <br />
+          <strong>そのままワンタップで見積作成・PDF出力・即注文</strong>
+          まで完了。 単品、セット、一式、どの発注パターンでも対応可能です。
+          <br />
+          <br />
+          「もっと少なく」「一式の倍率を変えたい」そんな現場特有の調整も、
+          <strong>「数量調整画面」で一発修正</strong>。
+          <br />
+          <br />
+          過去の<strong>注文履歴から再発注</strong>も、
+          <strong>現場別・月別の購入履歴確認</strong>も、
+          <strong>全てアプリから数秒で操作可能</strong>です。
+          <br />
+          <br />
+          さらに、現場で意外と面倒な
+          <strong>「面積拾い出し用 図形計算機能」</strong>、
+          <strong>「ドレン雨量計算ツール」</strong>なども標準搭載。
+          <br />
+          <strong>もう現場で電卓も、分厚い施工資料も不要</strong>です。
+          <br />
+          <br />
+          もちろん、材料屋側の
+          <strong>管理ウェブとも完全リアルタイム連携</strong>。
+          <strong>価格改定・配送不可日・受注状況</strong>は即時同期。
+          <br />
+          <br />
+          今までの「電話」「紙」「FAX」によるミスやタイムロスをなくし、
+          <strong>最短・正確・スマートな材料手配</strong>を、
+          このアプリ一つで実現します。
+        </div>
+
+        <div className="space-y-12">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="flex flex-col md:flex-row items-start md:items-center gap-6"
+            >
+              {/* 画像部分 */}
+              <div className="w-full md:w-1/2 flex justify-center">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  width={200}
+                  height={100}
+                  className="rounded shadow"
+                />
+              </div>
+
+              {/* テキスト部分 */}
+              <div className="w-full md:w-1/2">
+                <h2 className="text-2xl font-semibold mb-2">{feature.title}</h2>
+                <p className="text-gray-700">{feature.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </main>
+          ))}
+        </div>
+
+        <section className="text-center mt-20">
+          <h2 className="text-2xl font-bold mb-4">
+            今すぐTSMatelixで、材料発注をスマートに
+          </h2>
+
+          <QRSection />
+        </section>
+      </main>
+    </>
   );
 }
