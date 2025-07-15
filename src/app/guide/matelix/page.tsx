@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   keywords: [
     "TSMatelix",
     "建材注文アプリ",
+    "材料計算",
+    "防水工事",
+    "シーリング",
     "建設材料計算",
     "スマホ発注",
     "資材管理",

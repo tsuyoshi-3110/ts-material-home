@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   },
   keywords: [
     "TS Matelix",
+    "材料計算",
+    "防水工事",
+    "シーリング",
     "建材アプリ",
     "材料自動計算",
     "建築業DX",
